@@ -110,10 +110,10 @@ Listed for context. A full literature review hasn't been done, and related work 
 
 ## How this was built
 
-partisan-cue-bench was built with substantial help from Claude, including its code and bills. Reviews were run by AI agents. Claude models are also among those tested, which is a conflict of interest and is listed as a [known risk](METHODOLOGY.md#known-risks-and-gaps). Human review of the bills is still needed.
+partisan-cue-bench was built with substantial help from Claude, including its code and bills. Reviews were run by AI agents. Claude models are also among those tested, so this is a [known risk](METHODOLOGY.md#known-risks-and-gaps). A human author wouldn't be neutral either, so the aim is to compare results across different authors and reviewers, not to rely on any one of them.
 
 ## Contributing and license
 
 Critiques are especially welcome, including problems with bill wording, lean labels or statistics. Please open an issue.
 
-Released under the [MIT License](LICENSE).
+Released under the [Apache License 2.0](LICENSE).

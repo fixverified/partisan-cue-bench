@@ -3,7 +3,7 @@ name = "partisan-cue-bench"
 version = "0.1.0"
 description = "Does an AI model's vote change when only the proposal's party label changes?"
 readme = "README.md"
-license = "MIT"
+license = "Apache-2.0"
 requires-python = ">=3.11"
 dependencies = ["pyyaml>=6", "litellm==1.99.0"]
 
