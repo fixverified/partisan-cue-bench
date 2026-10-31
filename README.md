@@ -116,4 +116,4 @@ partisan-cue-bench was built with substantial help from Claude, including its co
 
 Critiques are especially welcome, including problems with bill wording, lean labels or statistics. Please open an issue.
 
-No license has been chosen yet, so standard copyright applies until one is added.
+Released under the [MIT License](LICENSE).
