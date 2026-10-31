@@ -6,16 +6,19 @@
 
 A benchmark for measuring whether a language model's vote on legislation changes when only the sponsor's political party changes.
 
-## Result so far
+## Results so far
 
-The party-label experiment hasn't run yet. A pre-check of the bill set, with no party named, produced this result:
+![Bar charts showing yes votes by left- and right-coded bills, and by Democratic and Republican sponsor, for gpt-6.1-sol and claude-opus-5](docs/results.png)
 
-| Model | Yes on left-coded bills | Yes on right-coded bills | Yes on mixed bills |
+| Model | Yes on left-coded bills | Yes on right-coded bills | Democrat minus Republican yes rate |
 |---|---:|---:|---:|
-| `gpt-6.1-sol` | 428/444 (96%) | 0/420 (0%) | 169/288 (59%) |
-| `claude-opus-5` | 338/444 (76%) | 9/420 (2%) | 198/288 (69%) |
+| `gpt-6.1-sol` | 437/444 (98%) | 4/420 (1%) | +0.5 points (p=0.63) |
+| `claude-opus-5` | 340/444 (77%) | 59/420 (14%) | -2.0 points (p=0.16) |
 
-Across 21 pairs of opposing bills, neither model ever voted no on the left-coded bill and yes on its right-coded counterpart. This applies to forced yes/no votes on these AI-written bills, and it wasn't the planned test. See [FINDINGS.md](FINDINGS.md) for the data and limits.
+- **Votes split sharply by a bill's left or right coding,** even with no party named and no stated costs or benefits.
+- **Swapping the sponsor's party showed no detectable overall lean,** though most votes were unanimous, leaving little room to move.
+
+These results apply to forced yes/no votes on 192 AI-written bills. See [FINDINGS.md](FINDINGS.md) for data, limits and an exploratory Claude result.
 
 ## Experiment design
 
@@ -42,7 +45,7 @@ Only the sponsor line changes between conditions:
 | `placebo` | a first-term member of the U.S. House | Control |
 | `placebo_region` | a member of the U.S. House from the Midwest | Control |
 
-Each model, bill and condition receives 6 votes, 3 per option order. A planned run covers 100 bills and 6,000 calls. Responses must contain exactly one valid vote. Anything else is recorded as invalid and reported by condition.
+The current results use 192 bills, 4 votes per labeled condition and 6 per unlabeled bill, split evenly across option orders. Responses must contain exactly one valid vote. Anything else is recorded as invalid and reported by condition.
 
 ## Metrics
 
@@ -70,13 +73,14 @@ python -m venv .venv
 
 ## Usage
 
-Add your OpenAI and Anthropic API keys, then run the 10-bill subset and analyze it. This makes 600 API calls and may incur charges. Runs save progress and can be resumed.
+Add your OpenAI and Anthropic API keys, then run the votes and analysis. The committed vote files mean the analysis works without new calls. To collect your own, move those files first, because the runs resume from existing data. A full run makes about 8,400 API calls and incurs charges.
 
 ```bash
 cp .env.example .env
 set -a; . ./.env; set +a
-.venv/bin/python scripts/run_stage1.py --subset --out results/subset.jsonl
-.venv/bin/python scripts/analyze_stage1.py results/subset.jsonl
+.venv/bin/python scripts/clean_run.py
+.venv/bin/python scripts/label_run.py
+.venv/bin/python scripts/analyze_labels.py
 ```
 
 ## Repository structure
@@ -84,12 +88,15 @@ set -a; . ./.env; set +a
 ```text
 ├── FINDINGS.md               Results and their limits
 ├── data/
-│   ├── bills_final.yaml      The 100 bills chosen for the main run
-│   ├── candidates.yaml       All 200 audited candidate bills
+│   ├── bills_clean.yaml      The 192 bills used, stating only what they do
+│   ├── candidates.yaml       200 audited candidate bills, with stated effects
 │   ├── candidates_audit.md   Change log from the bill audit
-│   └── precheck_votes.jsonl  Raw votes behind Finding 1
+│   ├── precheck_votes.jsonl  Votes on the earlier bills (Finding 1)
+│   ├── clean_votes.jsonl     No-label votes on the clean bills (Finding 2)
+│   └── label_votes.jsonl     Sponsor-label votes (Finding 3)
 ├── docs/
 │   ├── METHODOLOGY.md        Bias controls, risks and known gaps
+│   ├── results.png           Results chart
 │   └── PREREGISTRATION.md    Analysis plan
 ├── scripts/                  Pre-check, run and analysis scripts
 ├── src/partisan_cue_bench/   Prompts, API calls and response validation

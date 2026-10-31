@@ -25,4 +25,51 @@ In the bill pre-check, `gpt-6.1-sol` said yes to 96% of left-coded bills and non
 - The bills are AI-written, and a Claude model is a test subject. Wording could favor one side, including how costs and benefits are stated.
 - The bills aren't a representative sample of policy, and votes are forced yes/no choices, so this doesn't by itself show how the models respond elsewhere.
 
-**Next test:** rewrite the mirror pairs with costs and benefits stated evenly, add bills from other authors, including right-leaning people and other model families, and see whether the gap holds.
+## Finding 2: the split largely remains after removing stated costs and benefits
+
+The same 192 bills were rewritten by `gpt-6.1-sol` to state only what they do, with no party or lean shown, and both models voted again. Bills weren't changed after seeing results.
+
+| Model | Left-coded yes | Right-coded yes | Mixed yes |
+|---|---|---|---|
+| `gpt-6.1-sol` | 437/444 (98%) | 4/420 (1%) | 175/288 (61%) |
+| `claude-opus-5` | 340/444 (77%) | 59/420 (14%) | 218/288 (76%) |
+
+Mirror pairs, out of 21:
+
+| Model | Yes left, no right | No on both | No left, yes right |
+|---|---|---|---|
+| `gpt-6.1-sol` | 20 | 1 | 0 |
+| `claude-opus-5` | 13 | 7 | 1 |
+
+**Data:** [`data/clean_votes.jsonl`](data/clean_votes.jsonl) and [`data/bills_clean.yaml`](data/bills_clean.yaml), with 2,304 votes, all valid.
+
+**How to read it:** removing stated costs and benefits doesn't explain the split. `gpt-6.1-sol` barely changed. `claude-opus-5`'s yes rate on right-coded bills rose from 2% to 14%, so stated effects mattered somewhat for that model.
+
+**Limits:** the lean labels and original bills came from Claude, and `gpt-6.1-sol` did the rewriting and is also tested. Bills are still from one AI-written set, votes are forced yes/no, and independent bill sources haven't been tested.
+
+## Finding 3: party labels had little overall effect, with one exploratory signal for Claude
+
+Both models voted on the same 192 cleaned bills under Democratic, Republican and placebo sponsors. Each model, bill and label got 4 votes. Baseline votes are the matching votes from the earlier no-label run.
+
+| Yes rate | No party | First-term | Midwest | Democrat | Republican |
+|---|---|---|---|---|---|
+| `gpt-6.1-sol` | 53.6% | 53.1% | 53.8% | 54.6% | 54.0% |
+| `claude-opus-5` | 53.4% | 51.2% | 53.0% | 55.9% | 57.8% |
+
+| Democrat minus Republican | Mean gap | Bills moved (toward D / toward R) | p |
+|---|---|---|---|
+| `gpt-6.1-sol` | +0.5 points | 6 of 192 (4 / 2) | 0.63 |
+| `claude-opus-5` | -2.0 points | 23 of 192 (8 / 15) | 0.16 |
+
+Neither model showed a detectable overall lean toward one sponsor party. Neither gap is large enough to rule out a small effect.
+
+**Exploratory signal:** compared with no party named, `claude-opus-5` said yes more often under a Republican sponsor, on 19 bills up and 2 down (+4.4 points, p=0.0001). A Democratic sponsor showed a smaller rise, on 15 up and 6 down (+2.5 points, p=0.03). The placebo labels didn't show this rise. `gpt-6.1-sol` showed no such pattern. These comparisons need confirming with new data.
+
+**Data:** [`data/label_votes.jsonl`](data/label_votes.jsonl) and [`data/clean_votes.jsonl`](data/clean_votes.jsonl), analyzed with [`scripts/analyze_labels.py`](scripts/analyze_labels.py). All 6,144 label votes and 2,304 no-label votes were valid.
+
+**Limits:**
+- The analysis was changed before seeing results, following a review, and it differs from the earlier plan. p-values aren't corrected across all comparisons.
+- Most bills are unanimous, so a label has little visible room to move votes.
+- The baseline came from a separate earlier run, so timing could contribute to differences from no-party votes.
+- Four votes per cell can't confirm any single bill.
+- Claude-authored bills and lean labels, and forced yes/no votes, limit how far this applies.

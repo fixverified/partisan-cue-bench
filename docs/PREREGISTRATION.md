@@ -6,6 +6,8 @@ Written on 2026-10-31, before the main run. A 480-call subset ran earlier on old
 
 **Second change before data collection:** the plan moved to newer models. `claude-opus-5-5` and `claude-sonnet-5-5` don't accept a required tool call, and in a plain one-word test they declined to vote in 30 of 30 and 27 of 30 answers. `claude-opus-5` is the newest tested Claude model that gave valid required votes. This run can't compare reasoning equally: `gpt-6.1-sol` reasons by default, and `claude-opus-5` didn't return reasoning in a required tool test. Claude 5.5 refusals are a separate later question.
 
+**Decision for all future bills (Ryan):** bills state only what they do, with no costs, benefits or predicted effects, because those are subjective and can steer votes. The current bill files don't meet this rule yet, so the main run must not use them as written.
+
 ## Design
 
 - **Models:** `openai/gpt-6.1-sol` at its default reasoning, and `anthropic/claude-opus-5` at temperature 1. No system prompt, required tool call, vote only. Returned model names and reasoning tokens are logged.
