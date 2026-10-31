@@ -2,9 +2,9 @@ import json
 import random
 from types import SimpleNamespace
 
-from vote_bench import voting
-from vote_bench.analysis import party_gap, permutation_p, summarize
-from vote_bench.voting import build_prompt, cast_vote, parse_text_vote, parse_tool_vote
+from partisan_cue_bench import voting
+from partisan_cue_bench.analysis import party_gap, permutation_p, summarize
+from partisan_cue_bench.voting import build_prompt, cast_vote, parse_text_vote, parse_tool_vote
 
 PROPOSAL = {"id": "p", "lean": "neutral", "text": "Fix the bridges."}
 

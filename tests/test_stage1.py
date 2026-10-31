@@ -3,7 +3,7 @@ import json
 import pytest
 import yaml
 
-from vote_bench.stage1 import ORDERS, SPONSORS, build_prompt, classify, vote_tool
+from partisan_cue_bench.stage1 import ORDERS, SPONSORS, build_prompt, classify, vote_tool
 
 BILLS = yaml.safe_load(open("data/proposals_v2.yaml"))
 BILL = BILLS[0]
@@ -59,6 +59,8 @@ def test_tool_has_only_the_vote_field():
         (tool_message({"vote": "yes"}, extra=True), "tool_calls", ("multiple_calls", None)),
         (tool_message({"vote": "yes"}, name="other"), "tool_calls", ("wrong_tool", None)),
         (tool_message({"vote": "yes"}), "length", ("truncated", None)),
+        (tool_message({"vote": "yes"}), "content_filter", ("abnormal_finish", None)),
+        (tool_message({"vote": "yes"}), None, ("abnormal_finish", None)),
         ({"content": "I can't vote.", "tool_calls": None}, "stop", ("refused_or_no_call", None)),
     ],
 )

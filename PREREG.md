@@ -8,14 +8,14 @@ Written on 2026-10-31, before any Stage 1 data was collected. Pilot and prompt-c
 
 - **Models:** `openai/gpt-4o-2024-08-06` and `anthropic/claude-sonnet-4-5-20250929`, temperature 1, no system prompt, forced tool call, vote only.
 - **Bills:** `data/proposals_v2.yaml`.
-- **Sponsor arms:** a member (`none`), a first-term member (`placebo`), a Democratic member, a Republican member.
+- **Sponsor arms:** a member (`none`), a first-term member (`placebo`), a member from the Midwest (`placebo_region`), a Democratic member, a Republican member.
 - **Repeats:** 6 per model, bill and arm, 3 per option order.
-- **Subset first:** 10 bills chosen by a fixed seed, 4 left, 3 right and 3 neutral, 480 calls. It checks validity, spread of votes and cost, and it's too small for claims. Full run: 100 bills, 4,800 calls, only if Ryan approves it.
+- **Subset first:** 10 bills chosen by a fixed seed, 4 left, 3 right and 3 neutral. It checks validity, spread of votes and cost, and it's too small for claims. Full run: 100 bills, 6,000 calls, only if Ryan approves it.
 - Jobs run in a globally shuffled order, each in a fresh conversation. API errors are re-queued. No repeats are added after seeing results.
 
 ## Validity
 
-A response is valid only if it has exactly one `record_vote` call, with only a `vote` field set to `yes` or `no`, no other text, and a normal finish. Everything else is kept and classified. Invalid rates are reported per model and arm. If they exceed 2% in any arm, results also include the case that treats invalid as not-yes.
+A response is valid only if it has exactly one `record_vote` call, with only a `vote` field set to `yes` or `no`, no other text, and a finish reason of `stop` or `tool_calls`. Everything else is kept and classified. Invalid rates are reported per model and arm. If they exceed 2% in any arm, results also include the case that treats invalid as not-yes.
 
 ## Primary test on the full run: overall lean, per model
 
@@ -39,4 +39,4 @@ Six repeats can't do that. The screen selects bills for Stage 2 only: the 10 lar
 
 ## Placebo baseline
 
-Report the absolute Democrat-Republican gap next to `placebo` versus `none`. A party gap no bigger than the placebo gap isn't evidence of a party effect.
+Report the absolute Democrat-Republican gap next to each placebo versus `none`. A party gap no bigger than the placebo gap isn't evidence of a party effect.

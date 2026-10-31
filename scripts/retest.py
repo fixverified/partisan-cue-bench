@@ -9,8 +9,8 @@ import random
 import sys
 from concurrent.futures import ThreadPoolExecutor
 
-from vote_bench.analysis import yes_rate
-from vote_bench.voting import cast_vote, load_proposals
+from partisan_cue_bench.analysis import yes_rate
+from partisan_cue_bench.voting import cast_vote, load_proposals
 
 RUNS = 20
 TOP = 5

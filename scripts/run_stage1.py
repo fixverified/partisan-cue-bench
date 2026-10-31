@@ -11,7 +11,7 @@ from pathlib import Path
 import litellm
 import yaml
 
-from vote_bench.stage1 import ORDERS, REPEATS_PER_ORDER, SPONSORS, call_model
+from partisan_cue_bench.stage1 import ORDERS, REPEATS_PER_ORDER, SPONSORS, call_model
 
 MODELS = ["openai/gpt-4o-2024-08-06", "anthropic/claude-sonnet-4-5-20250929"]
 SEED = 20261031

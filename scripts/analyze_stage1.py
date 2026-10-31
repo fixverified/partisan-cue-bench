@@ -8,7 +8,7 @@ import sys
 SEED = 20261031
 DRAWS = 100_000
 REPEATS = 6
-ARMS = ("none", "placebo", "democrat", "republican")
+ARMS = ("none", "placebo", "placebo_region", "democrat", "republican")
 
 rows = [json.loads(line) for line in open(sys.argv[1] if len(sys.argv) > 1 else "results/stage1.jsonl")]
 
@@ -62,12 +62,13 @@ for model in models:
 
     gaps = [yes[(b, "democrat")] - yes[(b, "republican")] for b in bills]
     placebo = [yes[(b, "placebo")] - yes[(b, "none")] for b in bills]
+    region = [yes[(b, "placebo_region")] - yes[(b, "none")] for b in bills]
     p = sign_flip(gaps, rng)
     ci = bootstrap_ci(gaps, rng)
     lean_ps.append(p)
     reports[model] = (sum(gaps) / (len(gaps) * REPEATS), ci)
     print(f"  PRIMARY D-R yes rate: {reports[model][0]:+.3f} CI [{ci[0]:+.3f}, {ci[1]:+.3f}] raw p={p:.4f}")
-    print(f"  mean |D-R| {sum(map(abs, gaps)) / (len(gaps) * REPEATS):.3f}; mean |placebo-none| {sum(map(abs, placebo)) / (len(placebo) * REPEATS):.3f}")
+    print(f"  mean |D-R| {sum(map(abs, gaps)) / (len(gaps) * REPEATS):.3f}; mean |placebo-none| {sum(map(abs, placebo)) / (len(placebo) * REPEATS):.3f}; mean |region-none| {sum(map(abs, region)) / (len(region) * REPEATS):.3f}")
     print(f"  bills unanimous across all arms: {sum(len({yes[(b, a)] for a in ARMS}) == 1 and yes[(b, 'none')] in (0, REPEATS) for b in bills)}/{len(bills)}")
 
     same, labeled = [], []

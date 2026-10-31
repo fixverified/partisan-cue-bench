@@ -13,7 +13,7 @@ from .voting import SPONSORS, ask_self_report, cast_vote, load_proposals
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(prog="vote-bench")
+    parser = argparse.ArgumentParser(prog="partisan-cue-bench")
     parser.add_argument("--model", required=True, help="litellm model name")
     parser.add_argument("--proposals", default="data/proposals.yaml")
     parser.add_argument("--runs", type=int, default=5, help="Votes per proposal, sponsor and format")

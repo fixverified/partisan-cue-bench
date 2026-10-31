@@ -7,7 +7,7 @@ import sys
 
 import yaml
 
-from vote_bench.analysis import party_gap, permutation_p, yes_rate
+from partisan_cue_bench.analysis import party_gap, permutation_p, yes_rate
 
 proposals = {p["id"]: p for p in yaml.safe_load(open("data/proposals_100.yaml"))}
 
