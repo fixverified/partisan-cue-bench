@@ -1,4 +1,4 @@
-"""Analyze Stage 1 according to PREREG.md. Uses integer counts, so ties are exact."""
+"""Analyze Stage 1 according to docs/PREREGISTRATION.md. Uses integer counts, so ties are exact."""
 
 import collections
 import json

@@ -17,7 +17,7 @@ def simulate(path, probability, bills=100, seed=1):
         for model in MODELS:
             for index in range(bills):
                 base = rng.random()
-                lean = ["left", "right", "neutral"][index % 3]
+                lean = ["left", "right", "mixed"][index % 3]
                 for arm in ARMS:
                     for repeat in range(6):
                         vote = "yes" if rng.random() < probability(base, arm, lean) else "no"

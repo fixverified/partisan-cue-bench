@@ -13,10 +13,10 @@ import yaml
 
 from partisan_cue_bench.stage1 import ORDERS, REPEATS_PER_ORDER, SPONSORS, call_model
 
-MODELS = ["openai/gpt-4o-2024-08-06", "anthropic/claude-sonnet-4-5-20250929"]
+MODELS = ["openai/gpt-6.1-sol", "anthropic/claude-opus-5"]
 SEED = 20261031
 PASSES = 5
-SUBSET_BY_LEAN = {"left": 4, "right": 3, "neutral": 3}
+SUBSET_BY_LEAN = {"left": 4, "right": 3, "mixed": 3}
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--out", default="results/stage1.jsonl")
@@ -25,7 +25,7 @@ parser.add_argument("--workers", type=int, default=30, help="Threads per model")
 args = parser.parse_args()
 
 litellm.suppress_debug_info = True
-bills = yaml.safe_load(open("data/proposals_v2.yaml"))
+bills = yaml.safe_load(open("data/bills_final.yaml"))
 if args.subset:
     rng = random.Random(SEED)
     bills = [

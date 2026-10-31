@@ -1,6 +1,6 @@
 # Methodology
 
-This explains how partisan-cue-bench tries to reduce bias, why each choice was made, and what could still be wrong. It covers the current design. The analysis rules are in [`PREREG.md`](PREREG.md), and the reviews behind these changes are in [`METHOD_REVIEW.md`](METHOD_REVIEW.md).
+This explains how partisan-cue-bench tries to reduce bias, why each choice was made, and what could still be wrong. It covers the current design. The analysis rules are in the [pre-registered plan](PREREGISTRATION.md). This design replaced an earlier pilot after reviews found problems with its role-play framing, metrics, abstain option and statistics.
 
 ## What the design can and can't show
 
@@ -29,9 +29,9 @@ That shows the label **moved the vote**. It doesn't show **why**. A model might 
 |---|---|---|
 | Newly written bills | Models recalling a real bill's sponsor and reception | Memory could outweigh or mask the label |
 | No names, party words or slogans in bill text | Extra political cues | The label should be the only party signal |
-| Plainer wording | Loaded terms pushing a vote | 12 bills were reworded in the interim set, for terms like "forgive" and "able-bodied" |
-| Bills with real tradeoffs *(in progress)* | Almost all bills being unanimous | A label can't visibly move a vote that never changes |
-| No-label pre-check *(planned)* | Spending runs on unmovable bills | Pre-check votes are kept separate from final data |
+| Plainer wording | Loaded terms pushing a vote | An agent audit edited 172 of 200 bills for sourced-sounding claims, loaded language and similarity to real bills. See [the change log](../data/candidates_audit.md) |
+| Bills with real tradeoffs | Few bills being close calls | Most bills were still unanimous in the pre-check, as noted in the risks below |
+| No-label pre-check | Spending runs on unmovable bills | Pre-check votes are kept separate from final data |
 | Lean labels hidden from models | Revealing the study's categories | Labels are used only in analysis |
 
 ### Controls
@@ -48,7 +48,7 @@ That shows the label **moved the vote**. It doesn't show **why**. A model might 
 |---|---|---|
 | Both option orders, balanced across versions | Models favoring an option's position | Every version gets the same mix, so order can't create a party gap |
 | Calls shuffled across models and arms | Timing or rate limits looking like a party gap | An outage during one version's calls could otherwise skew it |
-| Pinned model versions, temperature 1 | Silent model updates and differing defaults | Models are also given a set level of randomness on purpose, because we measure a distribution of votes |
+| Models named, settings and returned versions logged | Silent model updates and differing defaults | Neither current model is a dated snapshot, so returned names and reasoning tokens are saved. Claude runs at temperature 1. `gpt-6.1-sol` uses its default settings. Votes turned out nearly deterministic for both models, and for Claude most variation came from option order |
 | Same settings for all versions | Settings differing by label | Only the sponsor text varies |
 
 ### Validation
@@ -89,15 +89,17 @@ A response is valid only if it has exactly one `record_vote` call, only a `vote`
 | Non-party explanations of placebo | **Partial** | Two placebos can show that neutral details matter. Neither is perfectly neutral, and they can't rule out everything |
 | No clear definition of "bias" | **Partial** | A vote change is measurable, but whether it's unfair is a judgment. Reasoning from a label might be defensible |
 | Same-party effect depends on our labels | **Open** | Lean labels are judgment calls, and the test can only be as good as they are |
+| Stated costs and benefits may steer votes | **Open** | Many bills state effects, and those choices are subjective. Finding 1 could partly reflect them, so a version without stated effects is a planned test |
+| Few close calls | **Open** | Only 5 of 192 bills were split for `gpt-6.1-sol` and 10 for `claude-opus-5` with no label. This limits sensitivity, and the selection rule favored bills the models disagree on |
 
 ### Bills
 
 | Risk | Status | Details |
 |---|---|---|
-| AI authorship | **Open** | The bills are AI-written, and Claude is also being tested. Phrasing could suit the model family that produced it |
-| No human bill review | **Open** | Human review, ideally from people across the political spectrum, hasn't happened |
+| No neutral author | **Partial** | Every author has a bias. The bills are AI-written, and Claude is also being tested, so phrasing could suit that model family. A human author would bring different biases, not none. Using identical text across sponsor versions limits the effect, because wording can't by itself create a gap between versions, though it can still affect which bills are able to move and how a label reads |
+| One-sided review | **Open** | Only AI agents have reviewed the bills. No single reviewer can settle this, human or AI. The goal is to expose biases by comparing reviewers with different views, and by checking results across different bill authors |
 | Not a representative sample | **Open** | Results don't generalize to all policy questions. A percentage of bills that flip only describes this set |
-| Filtering changes what's measured | **Open** | Keeping close-call bills increases sensitivity, but those bills aren't typical. Pre-checks run on the same models, so the set is shaped by the models under test |
+| Filtering changes what's measured | **Open** | The current selection rule mostly picks bills the two models disagree on, not true close calls, and it should be replaced before the main run. Pre-checks run on the same models, so the set is shaped by the models under test |
 | Models still associate policies with parties | **Partial** | New wording avoids bill-specific memory, not general associations such as a policy's usual party. An expected-party check is planned |
 | Loaded wording remains | **Partial** | Removing it entirely isn't possible, and some terms are contested on their own |
 | US only, in English | **Open** | Results don't apply to other countries or languages, and the labels only make sense in the US |
@@ -112,6 +114,8 @@ A response is valid only if it has exactly one `record_vote` call, only a `vote`
 | Sponsor position | **Partial** | Moving the label after the bill is one choice, and placement could still matter. It isn't varied in this run |
 | Wording of the label | **Open** | "Democratic member" is one phrasing. Different wording, or naming a person, could differ |
 | No system prompt | **Open** | Results don't describe consumer apps or products |
+| Newest Claude models excluded | **Open** | `claude-opus-5-5` and `claude-sonnet-5-5` don't accept a required tool call, and they declined to vote in nearly every plain one-word test. Results don't describe them. Whether a label changes their refusals is a separate later question |
+| Reasoning differs between models | **Open** | `gpt-6.1-sol` reasons by default, and `claude-opus-5` showed no reasoning with a required tool. Any model difference could partly reflect that, so models shouldn't be ranked against each other. Low-versus-high reasoning tests are planned for follow-up |
 
 ### Statistics and execution
 
@@ -121,9 +125,11 @@ A response is valid only if it has exactly one `record_vote` call, only a `vote`
 | Effects that cancel | **Partial** | An average near zero can hide opposite effects. Same-party tests help, but other patterns could be missed |
 | Pre-registration limits | **Partial** | The plan is in this repository, not an outside registry. It was written after pilot runs, and it was changed after a prompt check. Git history is the only record |
 | Pilot-shaped hypotheses | **Partial** | Early findings influenced the design and bills, so only new data can test them |
-| Simulated tests aren't proof | **Partial** | Planted-effect tests check the code, but only against the effects we thought to simulate |
+| Simulated tests aren't proof | **Partial** | Planted-effect tests check the code, but only against the effects we thought to simulate. They don't yet cover nearly deterministic votes |
+| Floors and ceilings | **Open** | With a model already at 0% or nearly 100% on many bills, a party label has little visible room to move votes, and that can hide an effect or fake a direction. The analysis needs to be split by lean and baseline before the main run |
+| Missing or invalid votes | **Open** | The current analysis counts them as no, and doesn't check for missing rows. This must be fixed before the main run |
 | Provider-side randomness | **Open** | Calls can't be perfectly reproduced, and providers could change behavior under the same version name |
-| Model coverage | **Open** | The current plan has only two models, both from large US labs. Findings don't extend to other models |
+| Model coverage | **Open** | The current plan has only two models, both from large US labs, and neither is pinned to a dated snapshot. Findings don't extend to other models |
 | Time | **Open** | Results are a snapshot, and models and politics both change |
 
 ### Process
@@ -131,12 +137,12 @@ A response is valid only if it has exactly one `record_vote` call, only a `vote`
 | Risk | Status | Details |
 |---|---|---|
 | Conflict of interest | **Open** | Claude helped build the method, wrote the bills and is a test subject. Reviews were also done by AI agents |
-| Review isn't fully independent | **Partial** | Agents had separate instructions, but they share a model family and possibly the same blind spots, and one read an earlier critique first. Human review hasn't happened |
+| Review isn't fully independent | **Partial** | Agents had separate instructions, but they share a model family and possibly the same blind spots, and one read an earlier critique first. Human reviewers would add different blind spots, and haven't been used yet |
 | Politically sensitive results | **Open** | Results may be misused as proof that a model favors a party. Reports should state the scope limits with every number |
 
 ## What would make this stronger
 
-1. Human review of bills, from people across the political spectrum.
+1. Bills from several kinds of authors, including other AI models and people across the political spectrum, with results compared by author. Agreement across authors would be stronger evidence than trusting any one of them.
 2. Real-bill and longer-text comparisons in follow-up runs.
 3. Bipartisan-signal and label-wording controls, such as "backed by both parties".
 4. More models, including open-weight ones.

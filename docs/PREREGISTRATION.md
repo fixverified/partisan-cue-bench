@@ -1,16 +1,19 @@
 # Pre-registered plan, Stage 1
 
-Written on 2026-10-31, before any Stage 1 data was collected. Pilot and prompt-check data are never pooled with this data. Scope: these bills, these model versions, this prompt.
+Written on 2026-10-31, before the main run. A 480-call subset ran earlier on older models and the previous bills, and pilot, prompt-check and subset data are never pooled with the main data. Scope: these bills, these model versions, this prompt.
 
 **Change before data collection:** a prompt check on 10 bills found Claude abstained about two-thirds of the time with a defined abstain option. Ryan chose yes/no only, so this measures which option a model picks when it can't abstain. Abstain is a separate question for later.
 
+**Second change before data collection:** the plan moved to newer models. `claude-opus-5-5` and `claude-sonnet-5-5` don't accept a required tool call, and in a plain one-word test they declined to vote in 30 of 30 and 27 of 30 answers. `claude-opus-5` is the newest tested Claude model that gave valid required votes. This run can't compare reasoning equally: `gpt-6.1-sol` reasons by default, and `claude-opus-5` didn't return reasoning in a required tool test. Claude 5.5 refusals are a separate later question.
+
 ## Design
 
-- **Models:** `openai/gpt-4o-2024-08-06` and `anthropic/claude-sonnet-4-5-20250929`, temperature 1, no system prompt, forced tool call, vote only.
-- **Bills:** `data/proposals_v2.yaml`.
+- **Models:** `openai/gpt-6.1-sol` at its default reasoning, and `anthropic/claude-opus-5` at temperature 1. No system prompt, required tool call, vote only. Returned model names and reasoning tokens are logged.
+- **Bills:** 100 bills from `data/candidates.yaml`, picked by a pre-check and saved as `data/bills_final.yaml`.
+- **Bill pre-check (`scripts/precheck.py`):** drop the 8 bills the audit called recognizable. For the other 192, collect 6 votes per model with the `none` label only. Within each lean, rank bills by how many models were not unanimous, then by how close the average yes rate is to 50%, breaking ties by seed 20261031. Take 38 left, 38 right and 24 mixed. A later review found this rule mostly selects bills the two models disagree on, not close calls, so the bill selection and run design are expected to change before the main run. If a lean has too few, report that and fill from the next-ranked bills overall. The rule was set in the script before the pre-check ran. Pre-check votes are never pooled with the main data.
 - **Sponsor arms:** a member (`none`), a first-term member (`placebo`), a member from the Midwest (`placebo_region`), a Democratic member, a Republican member.
 - **Repeats:** 6 per model, bill and arm, 3 per option order.
-- **Subset first:** 10 bills chosen by a fixed seed, 4 left, 3 right and 3 neutral. It checks validity, spread of votes and cost, and it's too small for claims. Full run: 100 bills, 6,000 calls, only if Ryan approves it.
+- **Subset first:** 10 bills chosen by a fixed seed, 4 left, 3 right and 3 mixed. It checks validity, spread of votes and cost, and it's too small for claims. Full run: 100 bills, 6,000 calls, only if Ryan approves it.
 - Jobs run in a globally shuffled order, each in a fresh conversation. API errors are re-queued. No repeats are added after seeing results.
 
 ## Validity

@@ -5,7 +5,7 @@ import yaml
 
 from partisan_cue_bench.stage1 import ORDERS, SPONSORS, build_prompt, classify, vote_tool
 
-BILLS = yaml.safe_load(open("data/proposals_v2.yaml"))
+BILLS = yaml.safe_load(open("data/bills_final.yaml"))
 BILL = BILLS[0]
 
 

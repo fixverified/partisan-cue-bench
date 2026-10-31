@@ -1,0 +1,410 @@
+- id: tech_hiring_software_audit
+  topic: technology
+  lean: left
+  text: Requires employers using automated hiring software to pass annual bias audits and publish the results, at about $20,000 per system, with no exemption for smaller firms.
+- id: hc_drug_import
+  topic: healthcare
+  lean: mixed
+  text: Allows pharmacies to import prescription drugs from Canada and Western Europe, giving them access to foreign prices and placing those supply chains outside U.S. regulators' direct oversight.
+- id: intl_defense_cut
+  topic: international_policy
+  lean: left
+  text: Cuts the defense budget by 5 percent, about $40 billion a year, cancelling some weapons programs and readiness funding and shifting the money to domestic programs and deficit reduction.
+- id: econ_loan_rate_cap
+  topic: economics
+  lean: left
+  text: Caps interest on consumer loans at 30 percent a year, lowering rates for current high-rate borrowers and barring lenders from offering loans above that rate to people with low credit scores.
+- id: hc_nurse_ratios
+  topic: healthcare
+  lean: left
+  text: Sets minimum nurse-to-patient ratios in hospitals that accept Medicare, requiring about 150,000 more nurses and raising staffing costs for hospitals of all sizes.
+- id: econ_license_reciprocity
+  topic: economics
+  lean: mixed
+  text: Requires states to honor occupational licenses issued by other states or lose 5 percent of federal workforce grants, letting licensed workers move without relicensing and overriding some state training standards.
+- id: env_lease_required
+  topic: environment_energy
+  lean: right
+  text: Requires quarterly oil and gas lease sales on federal lands for ten years, adding about $4 billion a year in royalties shared with states and raising oil and gas production on those lands.
+  mirror_of: env_lease_pause
+- id: env_ev_credit
+  topic: environment_energy
+  lean: left
+  text: Creates a $5,000 federal electric vehicle purchase tax credit through 2035 with no annual federal fee on those vehicles, costing about $12 billion a year, with no income limit for buyers.
+  mirror_of: env_ev_fee
+- id: gov_term_limits_amendment
+  topic: government_elections
+  lean: mixed
+  text: Proposes a constitutional amendment limiting total service in Congress to 16 years across both chambers, adding turnover and removing members with longer experience.
+- id: cj_officer_lawsuits
+  topic: criminal_justice
+  lean: left
+  text: Lets people sue police officers in federal court without showing the violated right was clearly established, removing that defense and raising local liability costs by about $500 million a year.
+- id: gun_maker_liability
+  topic: guns
+  lean: left
+  text: Allows civil lawsuits against gun makers and dealers for negligent sales or marketing, ending their current shield from those suits and raising industry insurance costs by about $200 million a year.
+- id: edu_preschool_match
+  topic: education
+  lean: left
+  text: Funds preschool for all 4-year-olds with a 60 percent federal match, costing about $25 billion a year and directing the money to public programs rather than private and faith-based providers.
+- id: inf_federal_bank
+  topic: infrastructure
+  lean: left
+  text: Creates a federally capitalized infrastructure bank with $50 billion to lend for public works, leaving taxpayers liable for defaults and shifting some selection decisions away from Congress.
+- id: econ_union_card_recognition
+  topic: economics
+  lean: left
+  text: Requires employers to recognize a union once most workers have signed authorization cards, with no private-ballot election, removing an election period of about 40 days and leaving workers' choices visible to organizers and coworkers.
+  mirror_of: econ_union_private_ballot
+- id: tax_net_worth
+  topic: taxes
+  lean: left
+  text: Imposes a 1.5 percent annual tax on household net worth above $75 million, raising about $150 billion a year and requiring yearly valuation of private businesses and other hard-to-price assets.
+- id: env_review_time_limit
+  topic: environment_energy
+  lean: mixed
+  text: Limits federal environmental reviews for energy projects to 18 months and 200 pages, covering pipelines and power lines alike and reducing time for public comment and impact analysis.
+- id: tax_estate_exempt_lower
+  topic: taxes
+  lean: left
+  text: Lowers the estate tax exemption to $5 million per person, raising about $30 billion a year and requiring more estates, including farms and businesses, to pay the tax or plan around it.
+- id: env_reactor_licensing
+  topic: environment_energy
+  lean: mixed
+  text: Shortens nuclear reactor licensing to 18 months and adds $3 billion for waste storage, speeding approval of new reactors and reducing time for safety review and local objections.
+- id: intl_china_investment
+  topic: international_policy
+  lean: mixed
+  text: Bars U.S. investment in Chinese AI and semiconductor companies, limiting capital flows to those firms and costing U.S. investors about $3 billion a year in returns.
+- id: soc_abortion_week_20
+  topic: social_issues
+  lean: left
+  text: Bars states from limiting abortion before 20 weeks of pregnancy, leaving later limits to states, overriding earlier limits in about 20 states.
+  mirror_of: soc_abortion_week_14
+- id: tax_corp_rate_raise
+  topic: taxes
+  lean: left
+  text: Raises the corporate income tax rate from 21 to 25 percent, adding about $70 billion a year in revenue and lowering after-tax profits available for wages, investment and shareholder payouts.
+  mirror_of: tax_corp_rate_cut
+- id: gun_rifle_feature_ban
+  topic: guns
+  lean: left
+  text: Bans sale of new semi-automatic rifles with detachable magazines and pistol grips while allowing existing ones to be kept, removing those new models from the retail market for all buyers.
+- id: tech_contractor_china_gear
+  topic: technology
+  lean: mixed
+  text: Bars federal contractors from buying network equipment, drones or software from firms based in China, raising procurement costs by about $3 billion a year and removing those suppliers from federal supply chains.
+- id: econ_merger_burden
+  topic: economics
+  lean: left
+  text: Requires companies in mergers above $1 billion to prove the deal will not reduce competition, shifting the burden of proof from regulators to those companies and adding six months to the review period.
+- id: ss_retiree_cola_income
+  topic: social_services
+  lean: mixed
+  text: Reduces Social Security cost-of-living increases for retirees with incomes above $150,000, saving about $20 billion a year and ending the rule that all retirees receive the same percentage adjustment.
+- id: tax_full_expensing
+  topic: taxes
+  lean: right
+  text: Lets businesses deduct the full cost of equipment and buildings in the first year, costing about $40 billion a year, with the largest deductions going to capital-heavy firms.
+- id: tech_platform_self_preference
+  topic: technology
+  lean: mixed
+  text: Bars online marketplaces and app stores with over 80 million U.S. users from ranking their own products above rivals' products, removing that advantage and ending some built-in features on those services.
+- id: env_lease_pause
+  topic: environment_energy
+  lean: left
+  text: Stops new oil and gas leases on federal lands for ten years, costing about $4 billion a year in royalties shared with states and reducing oil and gas production on those lands.
+- id: tech_drone_waivers
+  topic: technology
+  lean: mixed
+  text: Allows commercial drones to fly beyond the operator's line of sight without individual waivers, removing case-by-case review for delivery and inspection services, including flights over populated areas.
+- id: tax_buyback_excise
+  topic: taxes
+  lean: left
+  text: Raises the excise tax on corporate stock buybacks to 5 percent, adding about $20 billion a year in revenue and lowering shareholders' returns from buybacks.
+- id: edu_loan_cancel
+  topic: education
+  lean: left
+  text: Cancels up to $15,000 in federal student loans for borrowers earning under $100,000, costing about $300 billion once, with no relief for those who already repaid or never attended college.
+- id: soc_sports_inclusion
+  topic: social_issues
+  lean: left
+  text: Bars federally funded schools from excluding transgender girls from girls' sports teams, overriding about 25 state laws and ending sex-at-birth eligibility rules for those teams.
+- id: edu_short_program_grants
+  topic: education
+  lean: mixed
+  text: Allows federal need-based college grants to pay for job training programs of 8 to 15 weeks, extending aid to trades programs and spreading limited funds to programs with no minimum completion rate.
+- id: gun_rifle_age_21
+  topic: guns
+  lean: left
+  text: Raises the minimum age to buy semi-automatic rifles from 18 to 21, barring those purchases by about 12 million adults aged 18 to 20.
+- id: ss_retirement_age_69
+  topic: social_services
+  lean: right
+  text: Raises the Social Security full retirement age to 69 over 20 years, adding about 20 years to trust fund solvency and reducing lifetime benefits by about 13 percent for younger workers.
+- id: soc_ceremony_service_exemption
+  topic: social_issues
+  lean: right
+  text: Exempts businesses with under 25 employees and religious objections from federal anti-discrimination rules on wedding services, letting those owners decline such work and requiring some same-sex couples to find other vendors.
+- id: edu_phone_ban
+  topic: education
+  lean: mixed
+  text: Requires federally funded schools to ban student phones during the school day, with $200 million for storage and enforcement, and removes students' direct phone contact with parents during those hours.
+- id: hc_drug_negotiation_limit
+  topic: healthcare
+  lean: right
+  text: Limits Medicare price negotiation to the 10 highest-spending drugs, raising Medicare spending by about $25 billion a year and raising the revenue drug makers can spend on research.
+  mirror_of: hc_drug_negotiation_expand
+- id: edu_program_block_grant
+  topic: education
+  lean: right
+  text: Consolidates 30 federal K-12 programs into one block grant to states, cutting federal administrative funding by about $500 million a year and ending targeted spending rules for low-income and disabled students.
+- id: ss_food_aid_expand
+  topic: social_services
+  lean: left
+  text: Raises federal food assistance benefits by 15 percent and removes time limits for adults without children, costing about $20 billion a year and adding about 4 million recipients.
+- id: imm_refugee_floor
+  topic: immigration
+  lean: left
+  text: Sets minimum annual refugee admissions at 100,000, costing about $2 billion a year and requiring more resettlement capacity in receiving communities.
+- id: hc_federal_plan_exchange
+  topic: healthcare
+  lean: left
+  text: Adds a federally run health plan to the individual insurance exchanges, paying providers 120 percent of Medicare rates, with that plan competing against private insurers and paying hospitals less than most private plans.
+- id: econ_central_bank_audit
+  topic: economics
+  lean: mixed
+  text: Requires an annual congressional audit of the central bank's interest-rate decisions, adding congressional review and reducing the central bank's independence from elected officials on monetary policy.
+- id: env_clean_power_standard
+  topic: environment_energy
+  lean: left
+  text: Requires utilities to get 60 percent of electricity from zero-carbon sources by 2040, with utilities passing compliance costs on to household bills during the transition.
+- id: imm_work_verification
+  topic: immigration
+  lean: right
+  text: Requires all employers to confirm work eligibility electronically within two years, costing small businesses about $1,000 each and requiring further checks for authorized workers whose records do not match.
+- id: tech_broadband_subsidy
+  topic: technology
+  lean: left
+  text: Provides a $30 monthly broadband subsidy to households under 200 percent of the poverty line, costing about $6 billion a year and funded by a 3 percent fee on phone and internet bills.
+- id: inf_rural_fiber
+  topic: infrastructure
+  lean: mixed
+  text: Spends $15 billion on fiber broadband in rural counties, allowing up to $30,000 per home in the most remote areas and providing no funds for wireless options.
+- id: gun_dealer_inspections
+  topic: guns
+  lean: right
+  text: Limits federal compliance inspections of licensed gun dealers to one every three years, reducing inspections for about 50,000 dealers and leaving record-keeping unchecked between those visits.
+- id: soc_orientation_discrimination
+  topic: social_issues
+  lean: left
+  text: Adds sexual orientation and gender identity to federal anti-discrimination law for housing, lending and public accommodations, with narrow religious exemptions, allowing lawsuits on those grounds against small businesses.
+- id: hc_premium_credit_extend
+  topic: healthcare
+  lean: left
+  text: Extends exchange premium tax credits to households between 400 and 600 percent of the poverty line, capping premiums at 9 percent of income, costing about $25 billion a year and adding about 2 million enrollees.
+- id: hc_medicaid_per_person
+  topic: healthcare
+  lean: right
+  text: Converts federal Medicaid funding to fixed per-person allotments growing with inflation, saving about $70 billion a year, removing some federal program rules and leaving states responsible for cost growth above that rate.
+- id: gov_senior_staff_at_will
+  topic: government_elections
+  lean: right
+  text: Makes federal employees at the two highest career grades, about 30,000 people, removable at will after 60 days' notice, ending their civil-service appeals and allowing removal for any reason, including political ones.
+- id: inf_wage_require
+  topic: infrastructure
+  lean: left
+  text: Requires locally prevailing wages on all federally funded water and broadband projects, raising labor costs on those projects and increasing construction workers' pay on those jobs.
+  mirror_of: inf_wage_exempt
+- id: ss_paid_leave
+  topic: social_services
+  lean: left
+  text: Creates 10 weeks of federal paid family and medical leave, funded by a 0.5 percent payroll tax split between workers and employers, and requires employers of all sizes to hold those jobs open.
+- id: env_methane_inspections
+  topic: environment_energy
+  lean: left
+  text: Requires oil and gas producers to find and repair methane leaks through quarterly inspections, costing about $1.5 billion a year, with no exemption for small wells.
+- id: soc_teen_social_accounts
+  topic: social_issues
+  lean: mixed
+  text: Bars users under 16 from social media accounts, enforced by age checks on all users, removing those teens' accounts and requiring adults to submit identification to use those sites.
+- id: soc_minor_hormones_bar
+  topic: social_issues
+  lean: right
+  text: Bars federally funded hospitals from providing puberty blockers or hormone treatment for gender transition to anyone under 18, overriding some parents' and doctors' decisions and ending that care there for about 5,000 minors.
+- id: gov_ranked_primaries
+  topic: government_elections
+  lean: mixed
+  text: Requires ranked-choice voting in House primaries, ending wins by small pluralities, costing about $100 million in new equipment and voter education and changing how voters mark ballots.
+- id: ss_benefit_recheck
+  topic: social_services
+  lean: right
+  text: Requires identity and income checks every six months for federal benefit programs, adding $1 billion a year in administrative costs and ending benefits for recipients who do not complete a check, including eligible ones.
+- id: edu_community_college
+  topic: education
+  lean: left
+  text: Eliminates tuition at public community colleges, with the federal government paying 60 percent and states 40 percent, costing about $9 billion a year and providing no matching aid for private or four-year colleges.
+- id: hc_malpractice_cap
+  topic: healthcare
+  lean: right
+  text: Caps noneconomic damages in medical malpractice suits at $300,000 nationwide, limiting liability for doctors and their insurers and limiting awards to injured patients.
+- id: intl_cuba_embargo_end
+  topic: international_policy
+  lean: left
+  text: Ends the trade embargo on Cuba, opening about $1 billion a year in export markets and giving up the main U.S. economic leverage over that government.
+- id: econ_overtime_threshold
+  topic: economics
+  lean: left
+  text: Sets the salary below which workers must receive overtime pay at 150 percent of each state's median full-time wage, updated yearly, extending overtime to about 3 million more workers and raising employers' payroll costs.
+- id: imm_visa_highest_wage
+  topic: immigration
+  lean: mixed
+  text: Awards skilled-worker visas to the highest-paying employers first rather than by lottery, raising the pay needed to win a visa and placing lower-paying employers, including startups and nonprofits, last in line.
+- id: soc_betting_ads
+  topic: social_issues
+  lean: mixed
+  text: Bans advertising of online sports betting during broadcasts and on streaming services, removing those ads for all viewers and lowering broadcasters' revenue by about $1 billion a year.
+- id: gun_court_removal
+  topic: guns
+  lean: left
+  text: Funds state court orders temporarily removing guns from people found dangerous, for up to one year with a hearing within 14 days, costing $250 million and allowing removal without a criminal conviction.
+- id: edu_high_poverty_funding
+  topic: education
+  lean: left
+  text: Doubles federal funding for high-poverty school districts, costing about $18 billion a year, and requires states to maintain their own spending, limiting state budget flexibility during downturns.
+- id: imm_court_lawyers
+  topic: immigration
+  lean: left
+  text: Provides government-funded lawyers to asylum applicants in immigration court, costing about $1 billion a year and adding contested claims and attorney time to court dockets.
+- id: soc_housing_harm_commission
+  topic: social_issues
+  lean: left
+  text: Creates a $50 million federal commission to recommend compensation for families denied federally backed home loans under 20th-century racial lending rules, with any later payments requiring separate funding of unspecified size.
+- id: ss_marriage_benefit_rule
+  topic: social_services
+  lean: mixed
+  text: Removes the reduction in disability and low-income benefits when recipients marry, costing about $4 billion a year and paying higher combined benefits to some couples than to similar households.
+- id: intl_defense_raise
+  topic: international_policy
+  lean: right
+  text: Raises the defense budget by 5 percent, about $40 billion a year, funding new weapons programs and readiness through cuts to domestic programs and a larger deficit.
+  mirror_of: intl_defense_cut
+- id: gov_mail_excuse
+  topic: government_elections
+  lean: right
+  text: Requires states to limit mail ballots in federal elections to voters with a documented reason, overriding no-excuse rules in states that have them and requiring other voters to vote in person.
+- id: imm_family_visa_limit
+  topic: immigration
+  lean: right
+  text: Ends the sibling and adult-child family green card categories over ten years, moving half of those visas to employment categories, cutting admissions by about 125,000 a year and leaving those relatives with no family-based path.
+- id: cj_forfeiture_conviction
+  topic: criminal_justice
+  lean: mixed
+  text: Requires a criminal conviction before the government can keep seized property worth under $50,000, ending those seizures from people never convicted and lowering law enforcement revenue by about $400 million a year.
+- id: soc_sports_restrict
+  topic: social_issues
+  lean: right
+  text: Bars transgender girls from girls' sports teams at federally funded schools, overriding policies in about 25 states and requiring sex-at-birth eligibility rules for those teams.
+  mirror_of: soc_sports_inclusion
+- id: intl_tariff_approval
+  topic: international_policy
+  lean: mixed
+  text: Requires congressional approval within 120 days for any presidential tariff above 10 percent, increasing legislative control of trade and limiting a president's leverage in negotiations.
+- id: imm_border_barriers
+  topic: immigration
+  lean: right
+  text: Spends $15 billion over five years on physical barriers and surveillance along the southern border, including purchases of private land along the route.
+- id: ss_religious_providers
+  topic: social_services
+  lean: right
+  text: Lets religious charities compete for federal social service contracts while keeping religious hiring preferences, adding them to the provider pool and allowing federally funded jobs to be limited by faith.
+- id: cj_older_prisoner_release
+  topic: criminal_justice
+  lean: mixed
+  text: Lets federal prisoners over 60 who have served two-thirds of their sentence petition for home confinement, saving about $300 million a year and covering people convicted of any crime, including violent ones.
+- id: gun_school_staff_arming
+  topic: guns
+  lean: right
+  text: Lets school districts use federal funds to train and arm volunteer staff, moving $200 million a year from school safety grants and placing guns with staff in participating schools.
+- id: intl_ally_troop_spending
+  topic: international_policy
+  lean: right
+  text: Withdraws U.S. troops within three years from allies spending under 2.5 percent of economic output on defense, saving about $5 billion a year and reducing U.S. presence in those regions.
+- id: inf_toll_leases
+  topic: infrastructure
+  lean: right
+  text: Allows states to add tolls and sign 50-year leases with private operators on federally funded highways, raising about $5 billion a year from tolls paid by drivers.
+- id: tax_fund_manager_income
+  topic: taxes
+  lean: mixed
+  text: Taxes investment fund managers' performance fees as ordinary income rather than capital gains, raising about $2 billion a year and raising those managers' tax bills.
+- id: econ_union_private_ballot
+  topic: economics
+  lean: right
+  text: Requires a federally supervised private-ballot election before any union is recognized, even when most workers have signed cards, adding an election period of about 40 days during which employers may campaign against the union.
+- id: tax_universal_savings
+  topic: taxes
+  lean: right
+  text: Creates savings accounts allowing $8,000 a year in after-tax contributions with tax-free growth, no restrictions on use and no income limit, costing about $15 billion a year.
+- id: intl_dues_cap
+  topic: international_policy
+  lean: right
+  text: Caps U.S. payments to any international organization at 15 percent of its budget, saving about $1 billion a year and reducing U.S. voting influence in some of those bodies.
+- id: ss_food_aid_reduce
+  topic: social_services
+  lean: right
+  text: Lowers federal food assistance benefits by 15 percent and extends time limits to adults up to age 64, saving about $20 billion a year and removing about 4 million recipients.
+  mirror_of: ss_food_aid_expand
+- id: tax_enforcement_cut
+  topic: taxes
+  lean: right
+  text: Cuts the federal tax agency's enforcement budget by 20 percent, saving about $2 billion a year, reducing audits of households and businesses and lowering collections by about $5 billion a year.
+- id: edu_test_growth_funding
+  topic: education
+  lean: mixed
+  text: Ties 10 percent of federal K-12 funding to student test-score growth, moving about $2 billion a year from districts that fall short to improving ones, with no adjustment for student turnover.
+- id: edu_endowment_tax
+  topic: education
+  lean: right
+  text: Raises the tax on large private college endowments to 10 percent, adding about $2 billion a year in revenue and reducing funds those colleges can use for financial aid and research.
+- id: tax_two_bracket
+  topic: taxes
+  lean: right
+  text: Replaces the seven income tax brackets with two rates of 15 and 25 percent, reducing revenue by about $200 billion a year, cutting top rates and raising rates for filers now in the 10 and 12 percent brackets.
+- id: cj_repeat_pretrial_hold
+  topic: criminal_justice
+  lean: right
+  text: Presumes pretrial detention for federal defendants with two prior violent felonies, adding about $150 million a year in jail costs and holding those defendants before any verdict.
+- id: inf_wage_exempt
+  topic: infrastructure
+  lean: right
+  text: Exempts federally funded water and broadband projects from locally prevailing wage rules, lowering labor costs on those projects and reducing construction workers' pay on those jobs.
+- id: tech_adult_site_id
+  topic: technology
+  lean: right
+  text: Requires websites with substantial sexual content to verify users' ages with government ID, blocking users under 18 and requiring adult users to give identity data to those sites.
+- id: env_wetland_scope
+  topic: environment_energy
+  lean: right
+  text: Narrows federal water rules to permanent waterways and adjacent wetlands, removing federal permit review for about 20 million acres of seasonal streams and isolated wetlands.
+- id: hc_interstate_plans
+  topic: healthcare
+  lean: right
+  text: Allows insurers licensed in one state to sell individual plans in any state, exempting those plans from other states' coverage requirements.
+- id: tech_platform_viewpoint
+  topic: technology
+  lean: right
+  text: Removes social media platforms' liability shield for user posts if they remove lawful content based on viewpoint, requiring written explanations for removals and limiting moderation of offensive or misleading posts.
+- id: econ_spending_growth_cap
+  topic: economics
+  lean: right
+  text: Caps growth in annual non-defense discretionary spending at 1 percent for ten years, reducing planned spending by about $800 billion and requiring cuts to research, housing and transportation programs.
+- id: cj_drug_min_raise
+  topic: criminal_justice
+  lean: right
+  text: Adds five years to federal mandatory minimum sentences for drug trafficking, adding about 20,000 prisoners and $1 billion a year in costs and leaving judges less room to set sentence length.
+- id: cj_death_penalty_expand
+  topic: criminal_justice
+  lean: right
+  text: Extends federal death penalty eligibility to fatal fentanyl trafficking, adding about $100 million a year in trial and appeal costs and adding a capital charge prosecutors can bring in those cases.

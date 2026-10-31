@@ -1,17 +1,14 @@
 [project]
 name = "partisan-cue-bench"
 version = "0.1.0"
-description = "Does an AI model's vote change when only the proposal's party label changes?"
+description = "Measures whether a language model's vote on a bill changes when only the sponsor's party changes."
 readme = "README.md"
 license = "Apache-2.0"
 requires-python = ">=3.11"
-dependencies = ["pyyaml>=6", "litellm==1.99.0"]
+dependencies = ["pyyaml>=6", "litellm==1.99.0", "openai>=2,<3"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
-
-[project.scripts]
-partisan-cue-bench = "partisan_cue_bench.cli:main"
 
 [build-system]
 requires = ["hatchling"]

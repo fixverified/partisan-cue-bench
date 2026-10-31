@@ -23,6 +23,7 @@ ORDERS = list(itertools.permutations(VOTES))
 REPEATS_PER_ORDER = 3
 TEMPERATURE = 1.0
 MAX_TOKENS = 100
+OPENAI_MAX_OUTPUT_TOKENS = 4000
 TOOL_NAME = "record_vote"
 
 
@@ -82,27 +83,70 @@ def classify(message: dict[str, Any], finish_reason: str | None) -> tuple[str, s
     return "valid", vote.strip().lower()
 
 
-def call_model(model: str, bill: dict[str, Any], sponsor: str, order_index: int, repeat: int) -> dict[str, Any]:
-    """Make one vote call. API errors propagate so the runner can re-queue them."""
+def _call_anthropic(model: str, prompt: str, order: tuple[str, ...]) -> dict[str, Any]:
     import litellm
 
-    order = ORDERS[order_index]
-    prompt = build_prompt(bill, sponsor, order)
     response = litellm.completion(
         model=model,
         messages=[{"role": "user", "content": prompt}],
-        tools=[vote_tool(order, strict=model.startswith("openai/"))],
+        tools=[vote_tool(order, strict=False)],
         tool_choice={"type": "function", "function": {"name": TOOL_NAME}},
         temperature=TEMPERATURE,
         max_tokens=MAX_TOKENS,
     )
     choice = response.choices[0]
-    message = choice.message.model_dump()
-    status, vote = classify(message, choice.finish_reason)
     usage = response.usage.model_dump() if response.usage else {}
     return {
-        "model": model,
         "returned_model": response.model,
+        "message": choice.message.model_dump(),
+        "finish_reason": choice.finish_reason,
+        "temperature": TEMPERATURE,
+        "prompt_tokens": usage.get("prompt_tokens"),
+        "completion_tokens": usage.get("completion_tokens"),
+        "reasoning_tokens": None,
+    }
+
+
+def _call_openai(model: str, prompt: str, order: tuple[str, ...]) -> dict[str, Any]:
+    """Use the Responses API, which is how this model takes a required tool at its default reasoning."""
+    from openai import OpenAI
+
+    function = vote_tool(order, strict=True)["function"]
+    response = OpenAI().responses.create(
+        model=model.removeprefix("openai/"),
+        input=prompt,
+        tools=[{"type": "function", **function}],
+        tool_choice={"type": "function", "name": TOOL_NAME},
+        max_output_tokens=OPENAI_MAX_OUTPUT_TOKENS,
+    )
+    calls = [
+        {"function": {"name": item.name, "arguments": item.arguments}}
+        for item in response.output
+        if item.type == "function_call"
+    ]
+    finish = {"completed": "stop", "incomplete": "length"}.get(response.status, response.status)
+    usage = response.usage.model_dump() if response.usage else {}
+    return {
+        "returned_model": response.model,
+        "message": {"content": response.output_text, "tool_calls": calls, "raw": response.model_dump()},
+        "finish_reason": finish,
+        "temperature": None,
+        "prompt_tokens": usage.get("input_tokens"),
+        "completion_tokens": usage.get("output_tokens"),
+        "reasoning_tokens": (usage.get("output_tokens_details") or {}).get("reasoning_tokens"),
+    }
+
+
+def call_model(model: str, bill: dict[str, Any], sponsor: str, order_index: int, repeat: int) -> dict[str, Any]:
+    """Make one vote call. API errors propagate so the runner can re-queue them."""
+    order = ORDERS[order_index]
+    prompt = build_prompt(bill, sponsor, order)
+    call = _call_openai if model.startswith("openai/") else _call_anthropic
+    result = call(model, prompt, order)
+    status, vote = classify(result["message"], result["finish_reason"])
+    return {
+        "model": model,
+        "returned_model": result["returned_model"],
         "bill": bill["id"],
         "lean": bill["lean"],
         "topic": bill["topic"],
@@ -110,12 +154,13 @@ def call_model(model: str, bill: dict[str, Any], sponsor: str, order_index: int,
         "order_index": order_index,
         "repeat": repeat,
         "order": list(order),
-        "temperature": TEMPERATURE,
+        "temperature": result["temperature"],
         "prompt": prompt,
-        "raw_message": message,
-        "finish_reason": choice.finish_reason,
-        "prompt_tokens": usage.get("prompt_tokens"),
-        "completion_tokens": usage.get("completion_tokens"),
+        "raw_message": result["message"],
+        "finish_reason": result["finish_reason"],
+        "prompt_tokens": result["prompt_tokens"],
+        "completion_tokens": result["completion_tokens"],
+        "reasoning_tokens": result["reasoning_tokens"],
         "status": status,
         "vote": vote,
     }
