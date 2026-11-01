@@ -1,8 +1,10 @@
 """Party-label run on the clean bills: Democrat, Republican and two placebo labels, 4 votes per bill and label."""
 
+import argparse
 import json
 import random
 import threading
+import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -10,12 +12,22 @@ import yaml
 
 from partisan_cue_bench.stage1 import ORDERS, call_model
 
-MODELS = ["openai/gpt-6.1-sol", "anthropic/claude-opus-5"]
+DEFAULT_MODELS = ["openai/gpt-6.1-sol", "anthropic/claude-opus-5"]
 ARMS = ["democrat", "republican", "placebo", "placebo_region"]
 REPEATS_PER_ORDER = 2
-OUT = Path("data/label_votes.jsonl")
+DEFAULT_OUT = "data/label_votes.jsonl"
 SEED = 20261031
-KEEP = ["model", "returned_model", "bill", "lean", "topic", "sponsor", "order_index", "repeat", "order", "temperature", "prompt", "finish_reason", "prompt_tokens", "completion_tokens", "reasoning_tokens", "status", "vote"]
+KEEP = ["model", "returned_model", "provider", "bill", "lean", "topic", "sponsor", "order_index", "repeat", "order", "temperature", "prompt", "finish_reason", "prompt_tokens", "completion_tokens", "reasoning_tokens", "status", "vote"]
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--models", nargs="+", default=DEFAULT_MODELS, help="Model names, such as openrouter/deepseek/deepseek-chat")
+parser.add_argument("--provider", help="Pin OpenRouter to this host")
+parser.add_argument("--out", default=DEFAULT_OUT)
+parser.add_argument("--rpm", type=float, help="Limit requests per minute")
+args = parser.parse_args()
+MODELS = args.models
+OUT = Path(args.out)
+OUT.parent.mkdir(parents=True, exist_ok=True)
 
 bills = yaml.safe_load(open("data/bills_clean.yaml"))
 by_id = {bill["id"]: bill for bill in bills}
@@ -36,12 +48,25 @@ jobs = [
 random.Random(SEED).shuffle(jobs)
 print("to run:", len(jobs), flush=True)
 lock = threading.Lock()
+rate_lock = threading.Lock()
+next_call = [0.0]
+
+
+def wait_for_rate_limit():
+    if not args.rpm:
+        return
+    with rate_lock:
+        now = time.monotonic()
+        start = max(now, next_call[0])
+        next_call[0] = start + 60 / args.rpm
+    time.sleep(start - now)
 
 
 def work(job):
     model, bill, arm, order, repeat = job
+    wait_for_rate_limit()
     try:
-        row = call_model(model, by_id[bill], arm, order, repeat)
+        row = call_model(model, by_id[bill], arm, order, repeat, provider=args.provider)
     except Exception:  # noqa: BLE001 - API errors get re-queued
         return job
     with lock, OUT.open("a") as handle:

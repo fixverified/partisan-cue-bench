@@ -6,22 +6,22 @@
 <style>
   :root { --bg:#0E1117; --panel:#161B24; --line:#2A313D; --ink:#F4F6F9; --muted:#A8B1BF; --blue:#4C8FF0; --red:#E8605A; }
   * { box-sizing:border-box; margin:0; }
-  body { width:1600px; height:900px; background:var(--bg); color:var(--ink); font-family:-apple-system,"SF Pro Display","Helvetica Neue",Arial,sans-serif; padding:58px 68px 44px; display:flex; flex-direction:column; }
+  body { width:1600px; height:900px; background:var(--bg); color:var(--ink); font-family:-apple-system,"SF Pro Display","Helvetica Neue",Arial,sans-serif; padding:46px 60px 36px; display:flex; flex-direction:column; }
   .eyebrow { color:var(--muted); font-size:21px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; }
-  h1 { font-size:61px; line-height:1.08; font-weight:700; letter-spacing:-.022em; margin-top:15px; max-width:1420px; }
-  .panels { display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:38px; flex:1; }
-  .panel { background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:30px 36px 28px; display:flex; flex-direction:column; }
+  h1 { font-size:50px; line-height:1.1; font-weight:700; letter-spacing:-.022em; margin-top:15px; max-width:1420px; }
+  .panels { display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:28px; flex:1; }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:24px 32px 20px; display:flex; flex-direction:column; }
   h2 { font-size:30px; font-weight:680; letter-spacing:-.01em; }
   .sub { font-size:21px; color:var(--muted); margin-top:7px; line-height:1.3; }
-  .legend { display:flex; gap:26px; margin-top:19px; font-size:20px; color:var(--ink); }
+  .legend { display:flex; gap:26px; margin-top:13px; margin-bottom:6px; font-size:20px; color:var(--ink); }
   .key { display:flex; align-items:center; gap:10px; }
   .swatch { width:18px; height:18px; border-radius:4px; }
-  .model { margin-top:26px; }
-  .model-name { font-size:23px; font-weight:650; margin-bottom:10px; font-family:"SF Mono",Menlo,monospace; }
-  .row { display:grid; grid-template-columns:1fr 104px; align-items:center; gap:14px; margin-top:8px; }
-  .track { height:42px; background:#20262F; border-radius:5px; overflow:hidden; display:flex; }
+  .model { margin-top:27px; display:grid; grid-template-columns:170px 1fr; align-items:center; gap:12px; }
+  .model-name { font-size:18px; font-weight:650; font-family:"SF Mono",Menlo,monospace; }
+  .row { display:grid; grid-template-columns:1fr 82px; align-items:center; gap:10px; margin-top:4px; }
+  .track { height:24px; background:#20262F; border-radius:5px; overflow:hidden; display:flex; }
   .fill { height:100%; border-radius:0 5px 5px 0; }
-  .value { font-size:31px; font-weight:700; text-align:right; font-variant-numeric:tabular-nums; }
+  .value { font-size:23px; font-weight:700; text-align:right; font-variant-numeric:tabular-nums; }
   .blue { background:var(--blue); } .red { background:var(--red); }
   .takeaway { margin-top:auto; padding-top:18px; font-size:22px; line-height:1.3; color:var(--ink); }
   footer { display:flex; justify-content:space-between; gap:40px; align-items:flex-end; margin-top:22px; font-size:19px; color:var(--muted); line-height:1.35; }
@@ -30,51 +30,39 @@
 </head>
 <body>
   <div class="eyebrow">Partisan Cue Bench</div>
-  <h1>AI models backed left-coded bills far more often, whichever party's name was on them</h1>
-
+  <h1>Three of four AI models backed left-coded bills far more often. Grok 4.3 was close to even.</h1>
   <div class="panels">
-    <section class="panel">
-      <h2>Policy: a wide split</h2>
-      <div class="sub">Share voting yes, with no party named</div>
-      <div class="legend">
-        <span class="key"><span class="swatch blue"></span>Left-coded bills</span>
-        <span class="key"><span class="swatch red"></span>Right-coded bills</span>
-      </div>
-      <div class="model">
-        <div class="model-name">gpt-6.1-sol</div>
-        <div class="row"><div class="track"><div class="fill blue" style="width:98.4%"></div></div><div class="value">98%</div></div>
-        <div class="row"><div class="track"><div class="fill red" style="width:1%"></div></div><div class="value">1%</div></div>
-      </div>
-      <div class="model">
-        <div class="model-name">claude-opus-5</div>
-        <div class="row"><div class="track"><div class="fill blue" style="width:76.6%"></div></div><div class="value">77%</div></div>
-        <div class="row"><div class="track"><div class="fill red" style="width:14%"></div></div><div class="value">14%</div></div>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2>Sponsor: almost no overall shift</h2>
-      <div class="sub">Share voting yes on all 192 bills, by sponsor label</div>
-      <div class="legend">
-        <span class="key"><span class="swatch blue"></span>Democratic sponsor</span>
-        <span class="key"><span class="swatch red"></span>Republican sponsor</span>
-      </div>
-      <div class="model">
-        <div class="model-name">gpt-6.1-sol</div>
-        <div class="row"><div class="track"><div class="fill blue" style="width:54.6%"></div></div><div class="value">54.6%</div></div>
-        <div class="row"><div class="track"><div class="fill red" style="width:54%"></div></div><div class="value">54.0%</div></div>
-      </div>
-      <div class="model">
-        <div class="model-name">claude-opus-5</div>
-        <div class="row"><div class="track"><div class="fill blue" style="width:55.9%"></div></div><div class="value">55.9%</div></div>
-        <div class="row"><div class="track"><div class="fill red" style="width:57.8%"></div></div><div class="value">57.8%</div></div>
-      </div>
-    </section>
+    <section class="panel"><h2>Policy: a wide split, except Grok</h2><div class="sub">Share voting yes, with no party named</div>
+      <div class="legend"><span class="key"><span class="swatch blue"></span>Left-coded bills</span><span class="key"><span class="swatch red"></span>Right-coded bills</span></div>
+      <div class="model"><div class="model-name">gpt-6.1-sol</div><div class="bars">
+<div class="row"><div class="track"><div class="fill blue" style="width:98.4%"></div></div><div class="value">98%</div></div>
+<div class="row"><div class="track"><div class="fill red" style="width:1.0%"></div></div><div class="value">1%</div></div>
+</div></div><div class="model"><div class="model-name">claude-opus-5</div><div class="bars">
+<div class="row"><div class="track"><div class="fill blue" style="width:76.6%"></div></div><div class="value">77%</div></div>
+<div class="row"><div class="track"><div class="fill red" style="width:14.0%"></div></div><div class="value">14%</div></div>
+</div></div><div class="model"><div class="model-name">glm-5.3</div><div class="bars">
+<div class="row"><div class="track"><div class="fill blue" style="width:94.4%"></div></div><div class="value">94%</div></div>
+<div class="row"><div class="track"><div class="fill red" style="width:22.4%"></div></div><div class="value">22%</div></div>
+</div></div><div class="model"><div class="model-name">grok-4.3</div><div class="bars">
+<div class="row"><div class="track"><div class="fill blue" style="width:62.6%"></div></div><div class="value">63%</div></div>
+<div class="row"><div class="track"><div class="fill red" style="width:56.2%"></div></div><div class="value">56%</div></div>
+</div></div></section>
+    <section class="panel"><h2>Sponsor: little overall shift</h2><div class="sub">Share voting yes on all 192 bills, by sponsor label</div>
+      <div class="legend"><span class="key"><span class="swatch blue"></span>Democratic sponsor</span><span class="key"><span class="swatch red"></span>Republican sponsor</span></div>
+      <div class="model"><div class="model-name">gpt-6.1-sol</div><div class="bars">
+<div class="row"><div class="track"><div class="fill blue" style="width:54.6%"></div></div><div class="value">54.6%</div></div>
+<div class="row"><div class="track"><div class="fill red" style="width:54.0%"></div></div><div class="value">54.0%</div></div>
+</div></div><div class="model"><div class="model-name">claude-opus-5</div><div class="bars">
+<div class="row"><div class="track"><div class="fill blue" style="width:55.9%"></div></div><div class="value">55.9%</div></div>
+<div class="row"><div class="track"><div class="fill red" style="width:57.8%"></div></div><div class="value">57.8%</div></div>
+</div></div><div class="model"><div class="model-name">glm-5.3</div><div class="bars">
+<div class="row"><div class="track"><div class="fill blue" style="width:62.8%"></div></div><div class="value">62.8%</div></div>
+<div class="row"><div class="track"><div class="fill red" style="width:63.3%"></div></div><div class="value">63.3%</div></div>
+</div></div><div class="model"><div class="model-name">grok-4.3</div><div class="bars">
+<div class="row"><div class="track"><div class="fill blue" style="width:58.9%"></div></div><div class="value">58.9%</div></div>
+<div class="row"><div class="track"><div class="fill red" style="width:61.5%"></div></div><div class="value">61.5%</div></div>
+</div></div></section>
   </div>
-
-  <footer>
-    <div>192 bills stating only what they do. Forced yes/no votes in fresh API calls. 8,448 votes, all valid. Sponsor gaps not significant (p=0.63, 0.16).</div>
-    <div class="repo">github.com/fixverified/partisan-cue-bench</div>
-  </footer>
+  <footer><div>192 bills stating only what they do. Forced yes/no votes in fresh API calls. 16,896 votes. Sponsor gaps not significant (p=0.16 to 0.78).</div><div class="repo">github.com/fixverified/partisan-cue-bench</div></footer>
 </body>
 </html>

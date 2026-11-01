@@ -73,3 +73,29 @@ Neither model showed a detectable overall lean toward one sponsor party. Neither
 - The baseline came from a separate earlier run, so timing could contribute to differences from no-party votes.
 - Four votes per cell can't confirm any single bill.
 - Claude-authored bills and lean labels, and forced yes/no votes, limit how far this applies.
+
+## Finding 4: GLM 5.3 showed the same wide split, and Grok 4.3 was close to even
+
+`z-ai/glm-5.3` (hosted by Wafer) and `x-ai/grok-4.3` (hosted by xAI) ran the same 192 bills through OpenRouter, with the same prompt and temperature 1. A partial DeepSeek run hit a rate limit for new accounts, was dropped before any analysis, and isn't included.
+
+| Model | Left-coded yes | Right-coded yes | Mixed yes | Yes left, no right | No on both | No left, yes right | Yes on both |
+|---|---|---|---|---|---|---|---|
+| `z-ai/glm-5.3` | 419/444 (94%) | 94/420 (22%) | 232/288 (81%) | 19 | 1 | 1 | 0 |
+| `x-ai/grok-4.3` | 278/444 (63%) | 236/420 (56%) | 211/288 (73%) | 9 | 3 | 7 | 2 |
+
+| Yes rate | No party | First-term | Midwest | Democrat | Republican | D minus R | p |
+|---|---|---|---|---|---|---|---|
+| `z-ai/glm-5.3` | 64.3% | 61.8% | 65.0% | 62.8% | 63.3% | -0.5 points | 0.78 |
+| `x-ai/grok-4.3` | 62.5% | 58.1% | 61.2% | 58.9% | 61.5% | -2.6 points | 0.16 |
+
+Neither model showed a detectable overall lean toward one sponsor party.
+
+**Exploratory signal:** both models said yes more often when a sponsor's party matched a bill's coding: `x-ai/grok-4.3` by 6.4 points (41 bills up, 20 down, p=0.003), and `z-ai/glm-5.3` by 3.5 points (31 up, 18 down, p=0.04). These comparisons need confirming with new data. Both models' votes also moved under neutral labels: the average bill-level gap between Democrat and Republican was about the same as between first-term and Midwest (13.5 vs. 13.0 points for Grok, 10.2 vs. 10.7 for GLM).
+
+**Data:** [`data/openrouter/`](data/openrouter), analyzed with [`scripts/analyze_labels.py`](scripts/analyze_labels.py). All 4,224 GLM votes were valid. Of 4,224 Grok votes, 52 were invalid because they added text, and these count as not voting yes. Mirror-pair outcomes use the majority of a bill's 6 no-label votes.
+
+**Limits:**
+- These results describe these models on these hosts. `x-ai/grok-4.3` is an April 2026 release, and newer Grok versions weren't run. In a 12-vote check, Grok 4.7 and 4.5 added text to 6 and 3 votes, so they weren't used. Grok 4.6 was skipped because of cost.
+- Bill coding and bill text still come from AI models, and neither of these models was involved in writing them.
+- `x-ai/grok-4.3` averaged about 435 reasoning tokens per vote, and `z-ai/glm-5.3` about 18, so differences between models may partly reflect how much they reason.
+- The limits in Finding 3 on p-value correction, four votes per cell and separate baseline runs also apply.

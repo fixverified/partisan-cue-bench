@@ -129,7 +129,8 @@ A response is valid only if it has exactly one `record_vote` call, only a `vote`
 | Floors and ceilings | **Open** | With a model already at 0% or nearly 100% on many bills, a party label has little visible room to move votes, and that can hide an effect or fake a direction. The analysis needs to be split by lean and baseline before the main run |
 | Missing or invalid votes | **Open** | The current analysis counts them as no, and doesn't check for missing rows. This must be fixed before the main run |
 | Provider-side randomness | **Open** | Calls can't be perfectly reproduced, and providers could change behavior under the same version name |
-| Model coverage | **Open** | The current plan has only two models, both from large US labs, and neither is pinned to a dated snapshot. Findings don't extend to other models |
+| OpenRouter hosts | **Partial** | Runs can pin one host, disable fallbacks and record what ran. Hosts can still differ in version or filtering, so results describe that host. Finding 4 reports `z-ai/glm-5.3` on Wafer and `x-ai/grok-4.3` on xAI |
+| Model coverage | **Open** | The planned analysis covers two models from large US labs, and Finding 4 adds one Chinese model and one older Grok release. None is pinned to a dated snapshot, and findings don't extend to other models |
 | Time | **Open** | Results are a snapshot, and models and politics both change |
 
 ### Process

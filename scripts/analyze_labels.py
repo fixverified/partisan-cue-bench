@@ -1,19 +1,24 @@
 """Analyze party-label votes. Valid votes only, exact integer counts, and a check that every cell is complete."""
 
+import argparse
 import collections
 import json
 import random
-import sys
 
-MODELS = sys.argv[1:] or ["openai/gpt-6.1-sol", "anthropic/claude-opus-5"]
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--models", nargs="+", default=["openai/gpt-6.1-sol", "anthropic/claude-opus-5"])
+parser.add_argument("--label-votes", default="data/label_votes.jsonl")
+parser.add_argument("--clean-votes", default="data/clean_votes.jsonl")
+args = parser.parse_args()
+MODELS = args.models
 ARMS = ["none", "placebo", "placebo_region", "democrat", "republican"]
 VOTES_PER_CELL = 4
 DRAWS = 100_000
 SEED = 20261031
 
-rows = [json.loads(line) for line in open("data/label_votes.jsonl")]
+rows = [row for row in map(json.loads, open(args.label_votes)) if row["model"] in MODELS]
 # The baseline uses the first 2 repeats per order from the clean no-label run, matching the 4 votes per label.
-rows += [row for row in map(json.loads, open("data/clean_votes.jsonl")) if row["repeat"] < 2]
+rows += [row for row in map(json.loads, open(args.clean_votes)) if row["repeat"] < 2 and row["model"] in MODELS]
 
 cell = collections.defaultdict(list)
 lean = {}

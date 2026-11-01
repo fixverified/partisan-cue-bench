@@ -24,6 +24,9 @@ REPEATS_PER_ORDER = 3
 TEMPERATURE = 1.0
 MAX_TOKENS = 100
 OPENAI_MAX_OUTPUT_TOKENS = 4000
+OPENROUTER_MAX_TOKENS = 4000
+OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+OPENROUTER_PREFIX = "openrouter/"
 TOOL_NAME = "record_vote"
 
 
@@ -137,16 +140,62 @@ def _call_openai(model: str, prompt: str, order: tuple[str, ...]) -> dict[str, A
     }
 
 
-def call_model(model: str, bill: dict[str, Any], sponsor: str, order_index: int, repeat: int) -> dict[str, Any]:
+def openrouter_routing(provider: str | None) -> dict[str, Any]:
+    """Only use hosts that support the required tool call, and pin one host when given."""
+    routing: dict[str, Any] = {"require_parameters": True, "allow_fallbacks": False}
+    if provider:
+        routing["order"] = [provider]
+    return routing
+
+
+def _call_openrouter(model: str, prompt: str, order: tuple[str, ...], provider: str | None) -> dict[str, Any]:
+    import os
+
+    from openai import OpenAI
+
+    client = OpenAI(base_url=OPENROUTER_BASE_URL, api_key=os.environ["OPENROUTER_API_KEY"])
+    response = client.chat.completions.create(
+        model=model.removeprefix(OPENROUTER_PREFIX),
+        messages=[{"role": "user", "content": prompt}],
+        tools=[vote_tool(order, strict=False)],
+        tool_choice={"type": "function", "function": {"name": TOOL_NAME}},
+        temperature=TEMPERATURE,
+        max_tokens=OPENROUTER_MAX_TOKENS,
+        extra_body={"provider": openrouter_routing(provider), "usage": {"include": True}},
+    )
+    if not response.choices:
+        raise RuntimeError(f"OpenRouter returned no choices: {getattr(response, 'error', None)}")
+    choice = response.choices[0]
+    usage = response.usage.model_dump() if response.usage else {}
+    return {
+        "returned_model": response.model,
+        "provider": getattr(response, "provider", None),
+        "message": choice.message.model_dump(),
+        "finish_reason": choice.finish_reason,
+        "temperature": TEMPERATURE,
+        "prompt_tokens": usage.get("prompt_tokens"),
+        "completion_tokens": usage.get("completion_tokens"),
+        "reasoning_tokens": (usage.get("completion_tokens_details") or {}).get("reasoning_tokens"),
+    }
+
+
+def call_model(
+    model: str, bill: dict[str, Any], sponsor: str, order_index: int, repeat: int, provider: str | None = None
+) -> dict[str, Any]:
     """Make one vote call. API errors propagate so the runner can re-queue them."""
     order = ORDERS[order_index]
     prompt = build_prompt(bill, sponsor, order)
-    call = _call_openai if model.startswith("openai/") else _call_anthropic
-    result = call(model, prompt, order)
+    if model.startswith(OPENROUTER_PREFIX):
+        result = _call_openrouter(model, prompt, order, provider)
+    elif model.startswith("openai/"):
+        result = _call_openai(model, prompt, order)
+    else:
+        result = _call_anthropic(model, prompt, order)
     status, vote = classify(result["message"], result["finish_reason"])
     return {
         "model": model,
         "returned_model": result["returned_model"],
+        "provider": result.get("provider"),
         "bill": bill["id"],
         "lean": bill["lean"],
         "topic": bill["topic"],

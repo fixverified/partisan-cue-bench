@@ -8,17 +8,20 @@ A benchmark for measuring whether a language model's vote on legislation changes
 
 ## Results so far
 
-![Bar charts showing yes votes by left- and right-coded bills, and by Democratic and Republican sponsor, for gpt-6.1-sol and claude-opus-5](docs/results.png)
+![Bar charts showing yes votes by left- and right-coded bills, and by Democratic and Republican sponsor, for gpt-6.1-sol, claude-opus-5, glm-5.3 and grok-4.3](docs/results.png)
 
 | Model | Yes on left-coded bills | Yes on right-coded bills | Democrat minus Republican yes rate |
 |---|---:|---:|---:|
 | `gpt-6.1-sol` | 437/444 (98%) | 4/420 (1%) | +0.5 points (p=0.63) |
 | `claude-opus-5` | 340/444 (77%) | 59/420 (14%) | -2.0 points (p=0.16) |
+| `z-ai/glm-5.3` | 419/444 (94%) | 94/420 (22%) | -0.5 points (p=0.78) |
+| `x-ai/grok-4.3` | 278/444 (63%) | 236/420 (56%) | -2.6 points (p=0.16) |
 
-- **Votes split sharply by a bill's left or right coding,** even with no party named and no stated costs or benefits.
-- **Swapping the sponsor's party showed no detectable overall lean,** though most votes were unanimous, leaving little room to move.
+- **Three of four models split sharply by a bill's left or right coding,** even with no party named and no stated costs or benefits. `grok-4.3` was much closer to even.
+- **Swapping the sponsor's party showed no detectable overall lean in any model.** `gpt-6.1-sol` and `claude-opus-5` had little room to move because most of their votes were unanimous.
+- **`grok-4.3` and `glm-5.3` leaned toward sponsors matching a bill's coding** in exploratory tests that need confirming.
 
-These results apply to forced yes/no votes on 192 AI-written bills. See [FINDINGS.md](FINDINGS.md) for data, limits and an exploratory Claude result.
+These results apply to forced yes/no votes on 192 AI-written bills. See [FINDINGS.md](FINDINGS.md) for data, limits and exploratory results.
 
 ## Experiment design
 
@@ -83,6 +86,19 @@ set -a; . ./.env; set +a
 .venv/bin/python scripts/analyze_labels.py
 ```
 
+### Testing other models
+
+Models available on [OpenRouter](https://openrouter.ai) use an `openrouter/` prefix. Add `OPENROUTER_API_KEY` to `.env`, and write results to their own files. Use `--provider` to pin one host, since hosts of the same open-weight model can differ.
+
+```bash
+M=openrouter/z-ai/glm-5.3
+.venv/bin/python scripts/clean_run.py --models $M --provider Wafer --out results/glm_clean.jsonl
+.venv/bin/python scripts/label_run.py --models $M --provider Wafer --out results/glm_labels.jsonl
+.venv/bin/python scripts/analyze_labels.py --models $M --clean-votes results/glm_clean.jsonl --label-votes results/glm_labels.jsonl
+```
+
+Each run requires a host that supports the required tool call, disables fallback to other hosts, and records the returned model and host. A model that can't give a required tool call will show up as failures or invalid responses. If a host limits your request rate, add `--rpm`.
+
 ## Repository structure
 
 ```text
@@ -93,7 +109,8 @@ set -a; . ./.env; set +a
 │   ├── candidates_audit.md   Change log from the bill audit
 │   ├── precheck_votes.jsonl  Votes on the earlier bills (Finding 1)
 │   ├── clean_votes.jsonl     No-label votes on the clean bills (Finding 2)
-│   └── label_votes.jsonl     Sponsor-label votes (Finding 3)
+│   ├── label_votes.jsonl     Sponsor-label votes (Finding 3)
+│   └── openrouter/           GLM 5.3 and Grok 4.3 votes (Finding 4)
 ├── docs/
 │   ├── METHODOLOGY.md        Bias controls, risks and known gaps
 │   ├── results.png           Results chart
@@ -108,7 +125,7 @@ set -a; . ./.env; set +a
 - **A vote change doesn't reveal its cause.** A party label could signal favoritism, or act as information about a bill.
 - **Votes are forced choices.** Results don't describe how models respond in general conversation.
 - **Results are specific to this setup.** They cover these bills, this prompt and these model versions, using bare API calls.
-- **Models aren't directly comparable.** `gpt-6.1-sol` used reasoning and `claude-opus-5` didn't. The newest Claude models declined to vote and aren't included.
+- **Models aren't directly comparable.** `gpt-6.1-sol`, `grok-4.3` and `glm-5.3` returned reasoning tokens, while `claude-opus-5` showed none, and `grok-4.3` used far more than the others. `grok-4.3` is an April 2026 release, not current Grok. The newest Claude models declined to vote and aren't included.
 - **Authorship is a risk.** Bills were AI-written, and a Claude model is among those tested.
 
 The full list is in [Methodology](docs/METHODOLOGY.md#known-risks-and-gaps).
